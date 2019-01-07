@@ -3,12 +3,10 @@ package dependency.greendao.test.tinder.directional;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.mindorks.placeholderview.SwipeDirection;
 import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
@@ -16,12 +14,11 @@ import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.mindorks.placeholderview.annotations.swipe.SwipeCancelState;
 import com.mindorks.placeholderview.annotations.swipe.SwipeInDirectional;
-import com.mindorks.placeholderview.annotations.swipe.SwipeOutDirectional;
 import com.mindorks.placeholderview.annotations.swipe.SwipeTouch;
 import com.mindorks.placeholderview.annotations.swipe.SwipeView;
 import com.mindorks.placeholderview.annotations.swipe.SwipingDirection;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+import java.util.List;
 
 /**
  * Created by janisharali on 19/08/16.
@@ -44,9 +41,9 @@ public class TinderCard {
     private Profile mProfile;
     private Context mContext;
     private Point mCardViewHolderSize;
-    private Callback mCallback;
+    private retrofit2.Callback<List<Profile>> mCallback;
 
-    public TinderCard(Context context, Profile profile, Point cardViewHolderSize, Callback callback) {
+    public TinderCard(Context context, Profile profile, Point cardViewHolderSize, retrofit2.Callback<List<Profile>> callback) {
         mContext = context;
         mProfile = profile;
         mCardViewHolderSize = cardViewHolderSize;
@@ -56,8 +53,8 @@ public class TinderCard {
     @Resolve
     public void onResolved() {
         Glide.with(mContext).load(mProfile.getImageurl())
-                .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(mContext, Utils.dpToPx(7), 0,
-                        RoundedCornersTransformation.CornerType.TOP)))
+//                .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(mContext, Utils.dpToPx(7), 0,
+//                        RoundedCornersTransformation.CornerType.TOP)))
                 .into(profileImageView);
         nameAgeTxt.setText(mProfile.getName());
 //        locationNameTxt.setText(mProfile.getLocation());
@@ -69,13 +66,13 @@ public class TinderCard {
         Log.d("EVENT", "profileImageView click");
     }
 
-    @SwipeOutDirectional
-    public void onSwipeOutDirectional(SwipeDirection direction) {
-        Log.d("DEBUG", "SwipeOutDirectional " + direction.name());
-        if (direction.getDirection() == SwipeDirection.TOP.getDirection()) {
-            mCallback.onSwipeUp();
-        }
-    }
+//    @SwipeOutDirectional
+//    public void onSwipeOutDirectional(SwipeDirection direction) {
+//        Log.d("DEBUG", "SwipeOutDirectional " + direction.name());
+//        if (direction.getDirection() == SwipeDirection.TOP.getDirection()) {
+//            mCallback.onSwipeUp();
+//        }
+//    }
 
     @SwipeCancelState
     public void onSwipeCancelState() {
@@ -112,7 +109,7 @@ public class TinderCard {
                 + " alpha : " + alpha
         );
 
-        ((FrameLayout)mSwipeView).setAlpha(alpha);
+        mSwipeView.setAlpha(alpha);
     }
 
     interface Callback {

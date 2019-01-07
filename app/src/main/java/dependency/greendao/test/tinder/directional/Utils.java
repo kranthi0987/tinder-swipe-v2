@@ -20,12 +20,20 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import dependency.greendao.test.tinder.directional.network.retroFit.ApiClient;
+import dependency.greendao.test.tinder.directional.network.retroFit.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by janisharali on 21/08/16.
  */
 public class Utils {
 
     private static final String TAG = "Utils";
+    List<Profile> profileList = new ArrayList<>();
+    Profile profilemodel = new Profile();
 
     public static List<Profile> loadProfiles(Context context) {
         try {
@@ -81,5 +89,25 @@ public class Utils {
 
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    public void reload() {
+
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Call<List<Profile>> call = apiInterface.TINDER_CARD_OBSERVABLE();
+        call.enqueue(new Callback<List<Profile>>() {
+            @Override
+            public void onResponse(Call<List<Profile>> call, Response<List<Profile>> response) {
+                for (Profile profile : response.body()) {
+                    profileList.add(profile);
+                }
+                Log.d("profile", "onNext: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Profile>> call, Throwable t) {
+                Log.e("error", "onFailure: " + t.getMessage());
+            }
+        });
     }
 }
