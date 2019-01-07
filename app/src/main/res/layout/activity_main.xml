@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/rejectBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@mipmap/download" />
+
+        <ImageButton
+            android:id="@+id/acceptBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:background="@mipmap/share" />
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/undoBtn"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:background="@mipmap/likeanddislike" />-->
+        <com.like.LikeButton
+            app:icon_type="heart"
+            android:id="@+id/likebutton"
+            app:circle_start_color="@color/colorPrimary"
+            app:like_drawable="@drawable/thumb_on"
+            app:unlike_drawable="@drawable/thumb_off"
+            app:dots_primary_color="@color/colorAccent"
+            app:dots_secondary_color="@color/colorPrimary"
+            app:circle_end_color="@color/colorAccent"
+            app:icon_size="25dp"
+            app:liked="true"
+            app:anim_scale_factor="2"
+            app:is_enabled="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.mindorks.placeholderview.SwipeDirectionalView
+        android:id="@+id/swipeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
